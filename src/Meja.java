@@ -1,3 +1,5 @@
+package UTP;
+
 public class Meja {
     private int nomorMeja;
     private Pelanggan pelanggan;
@@ -44,6 +46,11 @@ public class Meja {
 
     // untuk mengecek apakah meja kosong
     public boolean isKosong() {
-        // EDIT DISINI
-    }
+        if (this.pelanggan == null) {
+            return true;
+        } else {
+            return false;
+        }
 }
+}
+
