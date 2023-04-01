@@ -1,3 +1,5 @@
+package UTP;
+
 public class Pelanggan {
     private String nama;
 
@@ -13,3 +15,4 @@ public class Pelanggan {
         this.nama = nama;
     }
 }
+
