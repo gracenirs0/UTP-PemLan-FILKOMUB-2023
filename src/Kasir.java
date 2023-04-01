@@ -1,3 +1,5 @@
+package UTP;
+
 import java.util.Scanner;
 
 public class Kasir {
@@ -21,25 +23,42 @@ public class Kasir {
     // digunakan untuk menampilkan daftar meja beserta keterangan ketersediaannya
     // gunakan method isKosong pada class Kasir agar lebih mudah
     public void tampilkanDaftarMeja() {
-        // EDIT DISINI
+        for (int i = 0; i <10; i++) {
+            System.out.print("Meja " + (i+1) + " (" );
+            if (daftarMeja[i].isKosong()) {
+                System.out.println("kosong)");
+            }
+            else {
+            System.out.println("terisi)");
+        }
+        }
     }
 
     // untuk menambahkan pelanggan pada meja tertentu
     // jika meja kosong tambahkan pelanggan pada meja tersebut
     // jika tidak buatlah keterangan bahwa meja sudah ada pelanggan
     public void tambahPelanggan(int nomorMeja, Pelanggan pelanggan) {
-        // EDIT DISINI
+        if (daftarMeja[nomorMeja - 1].isKosong()) {
+            daftarMeja[nomorMeja - 1].setPelanggan(pelanggan);
+        } else {
+            System.out.println("Maaf, meja sudah terisi");
+        }
     }
 
     // menambah pesanan menu pada nomor meja
     // jika menu tidak ada dalam daftar maka tampilkan "Menu is null"
     public void tambahPesanan(int nomorMeja, Menu menu) {
-        // EDIT DISINI
+        if (menu != null) {
+            daftarMeja[nomorMeja - 1].setMenu(menu);
+        } else {
+            System.out.println("Menu is null");
+        }
     }
 
     // Menghapus pelanggan
     public void hapusPelanggan(int nomorMeja) {
-        // EDIT DISINI
+        daftarMeja[nomorMeja - 1].isKosong();
+        daftarMeja[nomorMeja - 1].setPelanggan(null);
     }
 
     public int hitungHargaPesanan(int nomorMeja) {
@@ -65,8 +84,7 @@ public class Kasir {
         if (pelanggan != null && menu != null && menu.length > 0) {
             for (int i = 0; i < menu.length; i++) {
                 if (menu[i] != null) {
-                    System.out.println("Meja " + nomorMeja + " - " + pelanggan.getNama() + " memesan "
-                            + menu[i].getNama() + " seharga " + menu[i].getHarga());
+                    System.out.println("Meja " + nomorMeja + " - " + pelanggan.getNama() + " memesan " + menu[i].getNama() + " seharga " + menu[i].getHarga());
                 }
             }
         } else {
@@ -106,12 +124,13 @@ public class Kasir {
             switch (pilihan) {
                 case 1:
                     // menampilkan daftar meja dengan method yang sudah ada
-                    // EDIT DISINI
+                    tampilkanDaftarMeja();
+                    break;
                 case 2:
-                    // tampilkan pesan untuk input nomor meja dan nama pelanggan untuk digunakan
-                    // pada method
+                    // tampilkan pesan untuk input nomor meja dan nama pelanggan untuk digunakan pada method
                     // jangan lupa instansiasi Pelanggan dengan nama pelanggan sesuai input
-                    // EDIT DISINI
+                    tambahPelanggan(3, new Pelanggan("Budi"));
+                    break;
                 case 3:
                     boolean stopLoop = false;
                     System.out.print("Masukkan nomor meja: ");
@@ -149,25 +168,37 @@ public class Kasir {
                             }
                         }
                     } else {
-                        System.out.println("Meja tidak ada pelanggan");
+                        System.out.println("Meja belum terisi oleh pelanggan");
                     }
                     break;
                 case 4:
                     // untuk menghapus pelanggan pada meja tertentu
-                    // tampilkan pesan untuk memasukkan nomor meja yang akan dihapus untuk digunakan
-                    // pada method hapusPelanggan()
-                    // EDIT DISINI
+                    // tampilkan pesan untuk memasukkan nomor meja yang akan dihapus untuk digunakan pada method hapusPelanggan()
+                    System.out.print("Masukkan nomor meja yang akan dihapus: ");
+                    nomorMejaPesan = scanner.nextInt();
+                    hapusPelanggan(nomorMejaPesan);
+                    System.out.println("Meja "+ nomorMejaPesan + " telah dihapus");
+                    break;
+
                 case 5:
                     // Untuk melihat total harga pesanan pada meja tertentu
                     // tampilkan pesan untuk memasukkan nomor meja
-                    // jangan lupa membedakan keluaran apabila pelanggan belum memesan apapun /
-                    // total harga 0
-                    // EDIT DISINI
+                    // jangan lupa membedakan keluaran apabila pelanggan belum memesan apapun / total harga 0
+                    System.out.print("Nomor meja: ");
+                    nomorMejaPesan=scanner.nextInt();
+                    if (daftarMeja[nomorMejaPesan - 1].isKosong()) {
+                        System.out.println("Meja "+ nomorMejaPesan + " tidak memiliki pesanan\n");
+                    } else {
+                        System.out.println("Harga pesanan di meja " + nomorMejaPesan + " adalah " + hitungHargaPesanan(nomorMejaPesan));
+                    }
+                    break;
                 case 6:
                     // untuk melihat pesanan pada meja tertentu
                     // tampilkan pesan untuk memasukkan nomor meja
-                    // EDIT DISINI
-
+                    System.out.print("Nomor meja: ");
+                    nomorMejaPesan=scanner.nextInt();
+                    tampilkanPesanan(nomorMejaPesan);
+                    break;
                 case 0:
                     System.out.println("Terima kasih telah menggunakan aplikasi kasir restoran!");
                     break;
